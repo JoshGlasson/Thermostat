@@ -10,14 +10,15 @@
   </head>
   <body>
     <section>
-      <h1>Current temperature: <span id="current-temperature">20</span>°C in <span id="city-name">London</span></h1><br>
+      <h1>Current Temperature Outside: <span id="current-temperature">20</span>°C in <span id="city-name">London</span></h1><br>
       <form id="select-city">
         <input id="current-city" type="text" placeholder="Enter a city"></input>
         <input class="btn btn-dark" type="submit"></input>
       </form>
     </section><br><br>
     <section>
-      <h1 class="text-monospace" id="temperature"></h1>
+      <h1>Thermostat Temperature</h1>
+      <h1 class="text-monospace"><span id="temperature"></span>°C</h1>
     </section><br>
       <section><p>
         <button class="btn btn-dark" id="temperature-up">+</button>
@@ -25,7 +26,7 @@
         <button class="btn btn-dark" id="temperature-reset">reset</button>
         </p></section><p><br>
       <section>
-        Power Saving Mode<p><br>
+        <h2>Power Saving Mode</h2><br>
         <button class="btn btn-success" id="powersaving-on">PSM on</button>
         <button class="btn btn-dark" id="powersaving-off">PSM off</button>
       </p></section>
