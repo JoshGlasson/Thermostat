@@ -1,31 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html><center>
   <head>
+    <link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="./css/stylesheet.css">
     <title>Thermostat</title>
   </head>
   <body>
     <section>
-      <h1>Current temperature: <span id="current-temperature">20</span>°C</h1>
+      <h1>Current temperature: <span id="current-temperature">20</span>°C in <span id="city-name">London</span></h1><br>
       <form id="select-city">
         <input id="current-city" type="text" placeholder="Enter a city"></input>
-        <input type="submit"></input>
+        <input class="btn btn-dark" type="submit"></input>
       </form>
-    </section>
+    </section><br><br>
     <section>
-      <h1 id="temperature"></h1>
-      <p>
-        <button id="temperature-up">+</button>
-        <button id="temperature-down">-</button>
-        <button id="temperature-reset">reset</button>
-        power saving mode is <span id="power-saving-status">on</span>
-        <button id="powersaving-on">PSM on</button>
-        <button id="powersaving-off">PSM off</button>
-      </p>
-    </section>
+      <h1 class="text-monospace" id="temperature"></h1>
+    </section><br>
+      <section><p>
+        <button class="btn btn-dark" id="temperature-up">+</button>
+        <button class="btn btn-dark" id="temperature-down">-</button>
+        <button class="btn btn-dark" id="temperature-reset">reset</button>
+        </p></section><p><br>
+      <section>
+        Power Saving Mode<p><br>
+        <button class="btn btn-success" id="powersaving-on">PSM on</button>
+        <button class="btn btn-dark" id="powersaving-off">PSM off</button>
+      </p></section>
     <script src="src/thermostat.js"></script>
     <script src="src/jquery.min.js"></script>
     <script type='text/javascript' src='config.js'></script>
     <script src="src/interface.js"></script>
-  </body>
+  </body></center>
 </html>

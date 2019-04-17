@@ -67,7 +67,7 @@ describe('Thermostat', function(){
     it('returns medium for less than 18 to 25 ', function(){
       expect(thermostat.energyUsage()).toEqual('medium-usage')
     });
-    it('returns low for less than 18', function(){
+    it('returns high for more than 25', function(){
       thermostat.powerSavingModeOff();
       for (var i = 0; i < 10; i++) {
         thermostat.increase();

@@ -1,7 +1,8 @@
 $(document).ready(function() {
   var thermostat = new Thermostat();
   var weatherApi = config.WEATHER_API_KEY;
-  updateTemperature();
+  serverTemperature();
+  serverCity();
 
   $('#temperature-up').click(function() {
     thermostat.increase();
@@ -20,27 +21,34 @@ $(document).ready(function() {
 
   $('#powersaving-on').click(function() {
     thermostat.powerSavingModeOn();
-    $('#power-saving-status').text('on')
+    $(this).removeClass('btn btn-dark')
+    $(this).addClass('btn btn-success')
+    $('#powersaving-off').removeClass('btn btn-danger')
+    $('#powersaving-off').addClass('btn btn-dark')
     updateTemperature();
   })
 
   $('#powersaving-off').click(function() {
     thermostat.powerSavingModeOff();
-    $('#power-saving-status').text('off')
+    $(this).removeClass('btn btn-dark')
+    $(this).addClass('btn btn-danger')
+    $('#powersaving-on').removeClass('btn btn-success')
+    $('#powersaving-on').addClass('btn btn-dark')
     updateTemperature();
   })
-
-  displayWeather('London');
 
   $('#select-city').submit(function(event) {
     event.preventDefault();
     var city = $('#current-city').val();
     displayWeather(city);
+    $('#city-name').text(city);
+    $.post( "http:localhost:9292/city", { city: city });
   })
 
   function updateTemperature() {
   $('#temperature').text(thermostat._temperature);
   $('#temperature').attr('class', thermostat.energyUsage());
+  $.post( "http:localhost:9292/temperature", { temperature: thermostat._temperature });
 }
 
   function displayWeather(city) {
@@ -48,8 +56,52 @@ $(document).ready(function() {
   var token = '&appid=' + weatherApi;
   var units = '&units=metric';
   $.get(url + token + units, function(data) {
-   $('#current-temperature').text(data.main.temp);
+   $('#current-temperature').text(Math.round((data.main.temp)*10)/10);
   })
 }
+
+  function serverTemperature() {
+    $.ajax({url:"http:localhost:9292/city",
+            type: "HEAD",
+            timeout:1000,
+            statusCode: {
+              200: function() {
+                $.get("http:localhost:9292/temperature", function(data) {
+               if(data !== ""){
+                 thermostat._temperature = data;
+               }
+               updateTemperature();
+             });
+           },
+           0: function() {
+             updateTemperature();
+           }
+         }
+       });
+     }
+
+  function serverCity() {
+    $.ajax({url:"http:localhost:9292/city",
+            type: "HEAD",
+            timeout:1000,
+            statusCode: {
+              200: function() {
+                $.get("http:localhost:9292/city", function(data) {
+                 if(data !== ""){
+                   var city = data
+                   console.log(city)
+                   displayWeather(city);
+                   $('#city-name').text(city);
+                 } else {
+                   displayWeather('London');
+                 }
+               })
+             },
+              0: function() {
+                displayWeather('London');
+              }
+            }
+            });
+          }
 
 });
